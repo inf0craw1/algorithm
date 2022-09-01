@@ -32,17 +32,20 @@ int main() {
     if constexpr (local) 
         (void)!freopen("input.txt", "r", stdin);
 
-    int n;
-    long double avg, tmp = 0;
-
+    int n, maxi = 0, temp;
+    vector<long double> scores;
+    long double avg = 0;
+    
     cin >> n;
-
-    for (int i = 0; i < n; i++) {
-        cin >> tmp;
-        avg += tmp;
+    for ( int i = 0; i < n; i++ ) {
+        cin >> temp;
+        scores.push_back(temp);
+        maxi = max(maxi, temp);
     }
-    cout.precision(ldbl::max_limits10);
-    cout << double(avg / n) << endl;
+    for ( int i = 0; i < n; i++ ) {
+        avg += scores[i] / maxi * 100;
+    }
+    cout << avg / n << endl;
 
     return 0;
 }
