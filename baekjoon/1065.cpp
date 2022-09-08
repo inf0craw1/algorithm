@@ -23,6 +23,25 @@ using namespace std;
 
 /* - FUNCTIONS ----------------------------------- */
 
+bool IsHan(int n) {
+	int temp = n;
+	vector<int> nums;
+
+	if ( n < 10 ) {
+		return true;
+	}
+
+	while (temp) {
+		nums.push_back(temp % 10);
+		temp /= 10;
+	}
+	for (int i = 1, diff = nums[0] - nums[1]; i < nums.size(); i++) {
+		if (nums[i-1] - nums[i] != diff) return false;
+	}
+
+	return true;
+	
+}
 /* ----------------------------------------------- */
 
 int main() {
@@ -32,11 +51,14 @@ int main() {
     if constexpr (local) 
         (void)!freopen("input.txt", "r", stdin);
 
-	char a;
+	int n, ans = 0;
 
-	cin >> a;
+	cin >> n;
 
-	cout << (int)a << endl;
+	for (int i = 1; i <= n; i++) {
+		if (IsHan(i)) ans++;
+	}
+	cout << ans << endl;
 
     return 0;
 }
