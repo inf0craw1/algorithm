@@ -1,23 +1,34 @@
 #include <bits/stdc++.h>
 
-using namespce std;
+using namespace std;
+
+int d(int n) {
+	int temp = n, res = n;
+
+	while(temp) {
+		res += temp % 10;
+		temp /= 10;
+	}
+
+	return res;
+}
 
 int main() {
-	vector<int> self_numbers = {1, 3, 5, 7, 9, 20, 31, 42, 53, 64, 75, 86, 97};
+	int numbers[10001] = {0};
 
-	while(self_numbers[self_numbers.size() - 1] <= 10000) {
-		int last = self_numbers[self_nubmers.size() - 1];
-		int temp = last;
-		int new = last;
-		
-		while(temp) {
-			new += temp % 10;
-			temp /= 10;
+	for (int i = 1; i < 10000; i++) {
+		int temp = d(i);
+
+		while ( temp <= 10000 && !numbers[temp]) {
+			numbers[temp] = true;
+			temp = d(temp);
 		}
-		self_numbers.push_back(new);
 	}
-	for(int i = 0; i < self_nubmers.size(); i++) {
-		cout << self_numbers[i] << ' ';
+
+	for (int i = 1; i <= 10000; i++) {
+		if (!numbers[i]) {
+			cout << i << endl;
+		}
 	}
 	return 0;
 }
