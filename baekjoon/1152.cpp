@@ -34,10 +34,10 @@ int main() {
 
 	string s;
 	int counter = 0;
-	cin >> s;
+	getline(cin, s);
+	s = " " + s;
 
 	for (int i = 0; i < s.length(); i++) {
-		cout << s[i] << ' ' << s[i+1] << endl;
 		if (s[i] == ' ' && (('a' <= s[i+1] && s[i+1] <= 'z') || ('A' <= s[i+1] && s[i+1] <= 'Z'))) {
 			counter++;
 		}
