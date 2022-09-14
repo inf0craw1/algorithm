@@ -39,11 +39,19 @@ int main() {
 
 	for (int i = 0; i < s.length(); i++) {
 		for (int j = 0; j < 8; j++) {
-			if(strncmp(s+i, croatia[j], croatia[j].length()) == 0) {
-				res ++;
+			bool isEqual = true;
+			for (int k = 0; k < croatia[j].length(); k++) {
+				if ( croatia[j][k] != s[i+k] ) {
+					isEqual = false;
+					break;
+				}
+			}
+			if (isEqual) {
 				i += croatia[j].length() - 1;
+				break;
 			}
 		}
+		res++;
 	}
 
 	cout << res << endl;
