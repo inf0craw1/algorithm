@@ -33,9 +33,7 @@ int main() {
         (void)!freopen("input.txt", "r", stdin);
 
 	int a, b, res = 0, mini = 2e9;
-	bool era[10001] = {};
-	era[0] = true;
-	era[1] = true;
+	bool era[10001] = {true, true, };
 
 	cin >> a >> b;
 
