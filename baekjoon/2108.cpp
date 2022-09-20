@@ -33,7 +33,7 @@ int main() {
         (void)!freopen("input.txt", "r", stdin);
 
 	int num, temp, counter = 0;
-	int avg2 = 0, avg3, mini = 2e9, maxi = -2e9, maxFreqIndex = 0;
+	int avg2 = 0, avg3 = -1, mini = 2e9, maxi = -2e9, maxFreqIndex = 0;
 	double avg1 = 0;
 	int n[8002] = {};
 
@@ -51,13 +51,14 @@ int main() {
 
 	for ( int i = mini; i <= maxi ; i++ ) {
 		counter += n[i];
-		if ( avg2 == 0 && counter >= num/2+1 ) {
+		if ( counter >= num/2+1 ) {
 			avg2 = i;
+			break;
 		}
 	}
 	for( int i = mini; i <= maxi; i++ ) {
 		if ( n[maxFreqIndex] == n[i] ) {
-			if ( avg3 != 0 ) {
+			if ( avg3 != -1 ) {
 				avg3 = i;
 				break;
 			}
@@ -65,7 +66,7 @@ int main() {
 		}
 	}
 
-	cout << round(avg1/num) - 4000 << endl << avg2 - 4000 << endl << maxFreqIndex - 4000 << endl << maxi - mini << endl;
+	cout << round(avg1/num) - 4000 << endl << avg2 - 4000 << endl << avg3 - 4000 << endl << maxi - mini << endl;
 
     return 0;
 }
