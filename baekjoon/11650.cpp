@@ -23,8 +23,12 @@ using namespace std;
 
 /* - FUNCTIONS ----------------------------------- */
 
-bool comp(ll *a, ll *b) {
-	return a[2] < b[2];
+bool comp(vector<int, int> a, vector<int, int> b) {
+	if ( a.first == b.first ) {
+		return a.second < b.second;
+	}
+	return a.first < b.first;
+
 }
 /* ----------------------------------------------- */
 
@@ -35,17 +39,18 @@ int main() {
     if constexpr (local) 
         (void)!freopen("input.txt", "r", stdin);
 
-	int num;
-	ll n[100001][3]; 
+	int num, tmp1, tmp2;
+	vector<pair<int, int>> n;
 
 	cin >> num;
 
 	for ( int i = 0; i < num; i++ ) {
-		cin >> n[i][0] >> n[i][1];
-		n[i][2] = (n[i][0] + 100000) * 100000 + (n[i][1] + 100000);
+		cin >> tmp1 >> tmp2;
+		n.push_back(make_pair(tmp1, tmp2));
 	}
 
-	sort(n, n + num, comp);
+	sort(n.begin(), n.end(), comp);
+
 
     return 0;
 }
