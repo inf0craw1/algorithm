@@ -23,13 +23,6 @@ using namespace std;
 
 /* - FUNCTIONS ----------------------------------- */
 
-bool comp(vector<int, int> a, vector<int, int> b) {
-	if ( a.first == b.first ) {
-		return a.second < b.second;
-	}
-	return a.first < b.first;
-
-}
 /* ----------------------------------------------- */
 
 int main() {
@@ -46,11 +39,14 @@ int main() {
 
 	for ( int i = 0; i < num; i++ ) {
 		cin >> tmp1 >> tmp2;
-		n.push_back(make_pair(tmp1, tmp2));
+		n.push_back({tmp1, tmp2});
 	}
 
-	sort(n.begin(), n.end(), comp);
+	sort(n.begin(), n.end());
 
+	for ( int i = 0; i < num; i++ ) {
+		cout << n[i].first << ' ' << n[i].second << endl;
+	}
 
     return 0;
 }
