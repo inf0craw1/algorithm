@@ -1,4 +1,4 @@
-#include <bits/stdc++.h>
+#include <iostream>
 
 #define debug if constexpr (local) std::cout
 #define endl '\n'
