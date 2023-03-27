@@ -1,0 +1,60 @@
+#include <iostream>
+
+#define debug if constexpr (local) std::cout
+#define endl '\n'
+#define fi first
+#define se second
+#define all(x) x.begin(),x.end()
+
+#ifdef LOCAL
+constexpr bool local = true;
+#else
+constexpr bool local = false;
+#endif
+
+typedef long long ll;
+typedef unsigned long long ull;
+
+using namespace std;
+
+/* - GLOBAL VARIABLES ---------------------------- */
+ 
+/* ----------------------------------------------- */
+
+/* - FUNCTIONS ----------------------------------- */
+
+/* ----------------------------------------------- */
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(0); cout.tie(0);
+
+    if constexpr (local) 
+        (void)!freopen("input.txt", "r", stdin);
+
+	int a, b;
+
+	for ( ;; ) {
+		
+		cin >> a >> b;
+		
+		if ( a == 0 && b == 0 ) {
+			break;
+		}
+
+		if ( b % a == 0 ) {
+			cout << "factor" << endl;
+			continue;
+		}
+
+		if ( a % b == 0 ) {
+			cout << "multiple" << endl;
+			continue;
+		}
+
+		cout << "neither" << endl;
+
+	}
+
+    return 0;
+}
