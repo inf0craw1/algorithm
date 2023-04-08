@@ -1,4 +1,6 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <map>
 
 #define debug if constexpr (local) std::cout
 #define endl '\n'
@@ -18,12 +20,7 @@ typedef unsigned long long ull;
 using namespace std;
 
 /* - GLOBAL VARIABLES ---------------------------- */
-bool compareWithValue(vector<int> a, vector<int> b) {
-	return a[1] < b[1];
-}
-bool compareWithIndex(vector<int> a, vector<int> b) {
-	return a[0] < b[0];
-}
+
 /* ----------------------------------------------- */
 
 /* - FUNCTIONS ----------------------------------- */
@@ -37,27 +34,29 @@ int main() {
     if constexpr (local) 
         (void)!freopen("input.txt", "r", stdin);
 
-	int num, temp;
-	vector<vector<int>> n;
+	int num, i = 0;
+	map<int, int> m;
 
 	cin >> num;
 
+	vector<int> v(num, 0);
+
 	for ( int i = 0; i < num; i++ ) {
-		cin >> temp;
-		n.push_back({i, temp, 0});
+		cin >> v[i];
+
+		m.insert({v[i], 0});
 	}
-	sort(n.begin(), n.end(), compareWithValue);
-	temp = 0;
-	for( int i = 1; i < num; i++ ) {
-		if ( n[i-1][1] != n[i][1] )	{
-			n[i][2] = ++temp;
-			continue;
+
+
+	for ( auto mm = m.begin(); mm != m.end(); mm++, i++ ) {
+		mm->second = i;
+	}
+
+	for ( int i = 0; i < num; i++ ) {
+		auto temp =  m.find(v[i]);
+		if ( temp != m.end() ) {
+			cout << temp->second << ' ';
 		}
-		n[i][2] = temp;
-	}
-	sort(n.begin(), n.end(), compareWithIndex);
-	for ( int i = 0; i < num; i++ ) {
-		cout << n[i][2] << ' ';
 	}
 	cout << endl;
 
