@@ -72,7 +72,7 @@ int main() {
 		for ( int j = 0; primeNumbers[j] < v[i] ; j++ ) {
 			if ( s.find(v[i] - primeNumbers[j]) != s.end() ) {
 
-			
+				cout << "pair founded : " << s.find(v[i] - primeNumbers[j]) << ' ' << primeNumbers[j] << ' ' << endl;
 				
 				counter++;
 			}
