@@ -60,20 +60,11 @@ int main() {
 		}
 	}
 
-	for ( auto aa: primeNumbers ) {
-		cout << aa << ' ';
-	}
+	for ( int i = 0; i < n; i++ ) {
+		int counter = 0;
 
-	cout << endl;
-
-	for ( int i = 0, counter = 0; i < n; i++ ) {
-		cout << "for started v[i] : " << v[i] << endl;
-
-		for ( int j = 0; primeNumbers[j] < v[i] ; j++ ) {
+		for ( int j = 0; primeNumbers[j] <= v[i]/2 ; j++ ) {
 			if ( s.find(v[i] - primeNumbers[j]) != s.end() ) {
-
-				cout << "pair founded : " << s.find(v[i] - primeNumbers[j]) << ' ' << primeNumbers[j] << ' ' << endl;
-				
 				counter++;
 			}
 		}
