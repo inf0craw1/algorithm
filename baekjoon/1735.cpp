@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 #define debug if constexpr (local) std::cout
 #define endl '\n'
@@ -18,28 +19,10 @@ typedef unsigned long long ull;
 using namespace std;
 
 /* - GLOBAL VARIABLES ---------------------------- */
- 
-int numerator1, numerator2, denominator1, denominator2;
-int a, b;
 
 /* ----------------------------------------------- */
 
 /* - FUNCTIONS ----------------------------------- */
-
-void checkAndSwap(void) {
-	if ( a > b ) return;
-	swap(a, b);
-	return;
-}
-
-int leastCommonMultiple(int a, int b) {
-	if ( a % b == 0 ) {
-		return b;
-	}
-	leastCommonMultiple(a, b % a);
-	return 0;
-}
-
 /* ----------------------------------------------- */
 
 int main() {
@@ -49,33 +32,74 @@ int main() {
     if constexpr (local) 
         (void)!freopen("input.txt", "r", stdin);
 
+	int a, b, c, d;
+	int resNumerator, resDenominator;
+	vector<bool> sieveOfEratosthenes(175, false);
+	vector<int> primeNumbers;
+	int tempCommon = 1, common; 
 
-	cin >> numerator1 >> denominator1 >> numerator2 >> denominator2;
+	cin >> a >> b >> c >> d;
 
-	int commonDenominator = denominator1 * denominator2;
-	int res;
+	for ( int i = 2; i < 175; i++ ) {
+		if ( !sieveOfEratosthenes[i] ) {
+			primeNumbers.push_back(i);
 
-	a = denominator1;
-	b = denominator2;
+			for ( int j = i; j < 175; j += i  ) {
+				sieveOfEratosthenes[j] = true;
+			}
+		}
+	}
 
 
-	checkAndSwap();
-	res = leastCommonMultiple(a, b);
+	while ( 1 ) {
+		bool chk = false;
+		for ( int i = 0; primeNumbers[i] < min(b, d); i++ ) {
+			if ( b % primeNumbers[i] == 0 && d % primeNumbers[i] == 0 ) {
+				tempCommon *= primeNumbers[i];
 
-	commonDenominator /= res;
+				b /= primeNumbers[i];
+				d /= primeNumbers[i];
 
-	numerator1 *= commonDenominator / denominator1;
-	numerator2 *= commonDenominator / denominator2;
+				chk = true;
+			}
+		}
 
-	a = numerator1 + numerator2;
-	b = commonDenominator;
-
-	checkAndSwap();
-
-	res = leastCommonMultiple(a, b);
-
-	cout << (numerator1 + numerator2) / res << ' ' << commonDenominator / res << endl;
+		if ( !chk ) {
+			break;
+		}
+	}
 	
 
-    return 0;
+	common = tempCommon * b * d;
+	
+	a *= common / b;
+	c *= common / d;
+
+
+	resNumerator = a + c;
+	resDenominator = common;
+
+	common = 1;
+	
+	while (1) {
+		bool chk = false;
+		for ( int i = 0; primeNumbers[i] < resDenominator; i++ ) {
+			if ( resNumerator % primeNumbers[i] == 0 && resDenominator % primeNumbers[i] == 0 ) {
+				common *= primeNumbers[i];
+				resNumerator /= primeNumbers[i];
+				resDenominator /= primeNumbers[i];
+				chk = true;
+			}
+		}
+		if ( !chk ) {
+			break;
+		}
+	}
+	
+
+	cout << resNumerator << ' '  << resDenominator << endl;
+
+
+
+   return 0;
 }
