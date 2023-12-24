@@ -20,29 +20,10 @@ typedef unsigned long long ull;
 using namespace std;
 
 /* - GLOBAL VARIABLES ---------------------------- */
-vector<int> minis;
+vector<int> minis; 
 /* ----------------------------------------------- */
 
 /* - FUNCTIONS ----------------------------------- */
-
- void findMin(int cur, int step) {
-	 if ( minis[cur] <= step ) return;
-	 minis[cur] = step;
-	 cout << cur << ' ' << step << endl;
-	 if ( cur == 1 ) {
-		 cout << "fin : " << step << endl;
-		 minis[cur] = min(step, minis[cur]);
-		 return;
-	 }
-
-	 if ( cur % 3 == 0 ) {
-		 findMin(cur/3, step + 1);
-	 }
-	 if ( cur % 2 == 0 ) {
-	 	findMin(cur/2, step + 1);
-	 }
-	 findMin(cur-1, step + 1);
-}
 
 /* ----------------------------------------------- */
 
@@ -50,23 +31,28 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(0); cout.tie(0);
 
-	if constexpr (local) {
-        freopen("./input.txt", "r", stdin);
-	} 
-
 	int n;
-
 	cin >> n;
 	minis.resize(n+1, 2e9);
 
-	findMin(n, 0);
+    if constexpr (local) 
+        (void)!freopen("input.txt", "r", stdin);
 
-	int i = 0;
-	for ( auto v: minis ) {
-		cout << i++ << " : " << v << endl;
+	minis[1] = 0;
+
+	for ( int i = 1; i <= n; i++ ) {
+		if ( i+1 <= n && minis[i]+1 < minis[i+1] ) { // plus 1
+			minis[i+1] = minis[i] + 1;
+		}
+		if ( i*2 <= n && minis[i]+1 < minis[i*2] ) {
+			minis[i*2] = minis[i] + 1;
+		}
+		if ( i*3 <= n && minis[i]+1 < minis[i*3] ) {
+			minis[i*3] = minis[i] + 1;
+		}
 	}
-
-	cout << minis[1] << endl;
+	
+	cout << minis[n] << endl;
 
     return 0;
 }
