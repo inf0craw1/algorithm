@@ -20,32 +20,23 @@ typedef unsigned long long ull;
 using namespace std;
 
 /* - GLOBAL VARIABLES ---------------------------- */
-
-vector<int> fibo(41, 0);
-vector<int> zeros(41, 0);
-vector<int> ones(41, 0);
+vector<int> zeros(41, 0), ones(41, 0);
 /* ----------------------------------------------- */
 
 /* - FUNCTIONS ----------------------------------- */
+int getZeroFibo(int num) {
+	if ( num <= 1 || zeros[num] != 0 ) return zeros[num];
 
-int getFibo(int n) {
-	if(fibo[n] != 0) return fibo[n];
-	fibo[n] = getFibo(n-2) + getFibo(n-1);
-	return fibo[n];
+	zeros[num] = getZeroFibo(num - 2) + getZeroFibo(num - 1);
+	return zeros[num];
 }
+int getOneFibo(int num ) {
 
-int getNumberOfNum(int cur, char target) {
-	string temp = to_string(cur);
-	int cnt = 0;
+	if ( num <= 1 || ones[num] != 0 ) return ones[num];
 
-	for(auto s: temp) {
-		if( s == target ) {
-			cnt ++;
-		}
-	}
-	return cnt;
+	ones[num] = getOneFibo(num - 2) + getOneFibo(num - 1);
+	return ones[num];
 }
-
 /* ----------------------------------------------- */
 
 int main() {
@@ -54,34 +45,29 @@ int main() {
 
     if constexpr (local) 
         (void)!freopen("input.txt", "r", stdin);
-	fibo[0] = 1;
-	fibo[1] = 1;
-	fibo[2] = 2;
 
-	int n;
+	int n, temp;
 	cin >> n;
 
-	getFibo(41);
-	cout << fibo[20] << endl;
+	zeros.resize(n+1, 0);
+	ones.resize(n+1, 0);
 
-	for ( int i = 1; i <= 40; i++ ) {
-		zeros[i] = zeros[i-1] + getNumberOfNum(fibo[i],'0');
-		ones[i] = ones[i-1] + getNumberOfNum(fibo[i], '1');
-		cout << i << " : " << zeros[i] << ',' << ones[i] << endl;
-	}
+	zeros[0]=1;
+	zeros[1]=0;
+	ones[0]=0;
+	ones[1]=1;
 
-
-	int i = 0;
-	for ( auto f: fibo ) {
-		cout << i++ << " : " << f << endl;
-	}
-	cout << endl;
+	int res;
 
 	for ( int i = 0; i < n; i++ ) {
-		int temp;
 		cin >> temp;
-	}
 
+		getZeroFibo(temp);
+		getOneFibo(temp);
+
+		cout << zeros[temp] << ' ' << ones[temp] << endl;
+		
+	}
 
     return 0;
 }
