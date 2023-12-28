@@ -27,23 +27,23 @@ int n, m;
 
 /* - FUNCTIONS ----------------------------------- */
 
-void sequence(int num, vector<int> v) {
+void sequence(vector<int> v) {
 
-	if ( num != 0 ) {
-		auto temp = find(v.begin(), v.end(), num);
-		if ( temp != v.end() ) return;
+	if ( v.size() != 0 ) {
+		auto temp = find(v.begin(), v.end()-1, v[v.size() - 1]);
+		if ( temp != v.end()-1 ) return;
 		
-		if ( v.size() >= m-1 ) {
+		if ( v.size() >= m ) {
 			for ( auto vv:v ) {
 				cout << vv << ' ';
 			}
-			cout << num << endl;
 			return;
 		}
-		v.push_back(num);
 	}
 	for ( int i = 1; i <= n; i++ ) {
-		sequence(i, v);
+		vector<int> newVec = v;
+		newVec.push_back(i);
+		sequence(v);
 	}
 	return;
 }
@@ -59,9 +59,17 @@ int main() {
 
 	cin >> n >> m;
 
+	vector<int> test = {0, 1, 2, 3, 3};
+
+	cout << ' ' << test.size() << ' ' << test.size() - 1 << ' ' << test[test.size() - 1] << endl;
+
+	if ( find(test.begin(), (test.end() - 1), test[test.size() ]) == (test.end() - 1 )) {
+		cout << "found!!" << endl;
+	}
+
 	vector<int> empty;
 
-	sequence(0, empty);
+	sequence(empty);
 
     return 0;
 }
