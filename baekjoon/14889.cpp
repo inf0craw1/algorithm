@@ -27,11 +27,13 @@ vector<vector<int>> stats = {{0}};
 
 /* - FUNCTIONS ----------------------------------- */
 int getCount(int n) {
-	int res = 1;
+	ull res = 1;
 	int half = n / 2;
+
 	for ( int i = half + 1; i <= n; i++) {
 		res *= i;
 	}
+
 	for ( int i = 2; i <= half; i++ ) {
 		res /= i;
 	}
@@ -75,7 +77,6 @@ void selectTeam(vector<int> teamArr) {
 			int otherTeamScore = getTeamScore(otherTeamArr);
 			int diff = teamScore - otherTeamScore;
 			if ( diff < 0 ) diff *= -1;
-
 			mini = min(mini, diff);
 
 			return;
