@@ -23,47 +23,46 @@ int num, cnt = 0;
 /* ----------------------------------------------- */
 
 /* - FUNCTIONS ----------------------------------- */
+int checkIsSafe(vector<int> v) {
+	int size = v.size();
+	int last = v[size - 1];
 
-int isSafe(int row, int col) {
-	if ( row < 0 || col < 0 || row >= num || col >= num ) return 0;
+	for ( int i = 0; i < size - 1; i++ ) {
+		if ( size - 1 - i == abs( last - v[i] )) return 0;
+	}
+
 	return 1;
 }
 
-vector<vector<int>> blockMap(int row, int col, vector<vector<int>> m) {
-	for ( int i = 0; i < num - row; i++ ) {
-		m[row+i][col] = 1;
-		if ( isSafe(row+i, col+i) ) {
-			m[row+i][col+i] = 1;
+
+void getCombination(vector<int> v) {
+	
+	int size = v.size();
+
+	for ( int i = 0; i < size - 1; i++ ) {
+		if ( v[i] == v[size - 1] ) {
+			return;
 		}
-		if ( isSafe(row+i, col-i) ) {
-			m[row+i][col-i] = 1;
+		if ( !checkIsSafe(v) ) return;
+	}
+
+	if ( v.size() ) {
+		if ( v.size() == num ) {
+			cnt ++;
+			for ( auto vv: v ) {
+				cout << vv << ' ';
+			}
+			cout << endl;
 		}
 	}
 
-	return m;
-}
-
-void placeQueen(int head, vector<vector<int>> m) {
-
-	if ( head == num ) {
-		cnt++;
-		return;
-	}
-
-	int chk = 0;
 	for ( int i = 0; i < num; i++ ) {
-		if ( !m[head][i] ) {
-			chk = 1;
-			vector<vector<int>> newMap = m;
-			newMap = blockMap(head, i, m);
-			placeQueen(head+1, newMap);
-		}
+		vector<int> newVec = v;
+		newVec.push_back(i);
+		getCombination(newVec);
 	}
-	if (!chk) return;
 
-	return;
 }
-
 /* ----------------------------------------------- */
 
 int main() {
@@ -73,11 +72,11 @@ int main() {
     if constexpr (local) 
         (void)!freopen("input.txt", "r", stdin);
 
+	vector<int> empty;
+	
 	cin >> num;
 
-	vector<vector<int>> empty(num, vector<int> (num, 0));
-	
-	placeQueen(0, empty);
+	getCombination(empty);
 	
 	cout << cnt << endl;
 
