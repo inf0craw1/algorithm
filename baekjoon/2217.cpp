@@ -1,6 +1,6 @@
 #include <iostream>
 #include <algorithm>
-#include <set>
+#include <vector>
 
 #define debug if constexpr (local) std::cout
 #define endl '\n'
@@ -34,33 +34,24 @@ int main() {
     if constexpr (local) 
         (void)!freopen("input.txt", "r", stdin);
 
-	int n, temp, cnt = 0;
-	ll res = 0;
-	multiset<ll> nums;
+	int num, temp, maxi = 0;
+	vector<int> weights;
 
+	cin >> num;
 
-	cin >> n;
-
-	for ( int i = 0; i < n; i++ ) {
+	for ( int i = 0; i < num; i++ ) {
 		cin >> temp;
-		nums.insert(temp);
+		weights.push_back(temp);
 	}
 
-	for ( int i = 0; i < n - 1; i++ ) {
-		for ( auto ss: nums ) {
-			cout << ss << ' ';
-		}
-		cout << endl;
-		auto it = nums.begin();
-		ll first = *(it++);
-		ll second = *it;
-		ll sum = first + second;
-		res += sum;
-		nums.erase(first);
-		nums.erase(second);
-		nums.insert(sum);
+	sort(weights.rbegin(), weights.rend());
+
+	for ( int i = 0; i < num; i++ ) {
+		maxi = max(maxi, weights[i] * (i + 1));
 	}
 
-	cout << res << endl;
+	cout << maxi << endl;
+	
+
     return 0;
 }

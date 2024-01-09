@@ -1,6 +1,5 @@
 #include <iostream>
-#include <algorithm>
-#include <set>
+#include <vector>
 
 #define debug if constexpr (local) std::cout
 #define endl '\n'
@@ -34,33 +33,23 @@ int main() {
     if constexpr (local) 
         (void)!freopen("input.txt", "r", stdin);
 
-	int n, temp, cnt = 0;
-	ll res = 0;
-	multiset<ll> nums;
+	int num;
+	vector<int> times = {10, 60, 300};
 
-
-	cin >> n;
-
-	for ( int i = 0; i < n; i++ ) {
-		cin >> temp;
-		nums.insert(temp);
+	cin >> num;
+	
+	if ( num % 10 != 0 ) {
+		cout << -1 << endl;
+		return 0;
 	}
 
-	for ( int i = 0; i < n - 1; i++ ) {
-		for ( auto ss: nums ) {
-			cout << ss << ' ';
-		}
-		cout << endl;
-		auto it = nums.begin();
-		ll first = *(it++);
-		ll second = *it;
-		ll sum = first + second;
-		res += sum;
-		nums.erase(first);
-		nums.erase(second);
-		nums.insert(sum);
+	for ( int i = times.size() - 1; i >= 0; i-- ) {
+		cout << num / times[i] << ' ';
+		num %= times[i];
 	}
+	cout << endl;
 
-	cout << res << endl;
+
+
     return 0;
 }

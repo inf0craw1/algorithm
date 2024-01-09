@@ -1,6 +1,5 @@
 #include <iostream>
-#include <algorithm>
-#include <set>
+#include <vector>
 
 #define debug if constexpr (local) std::cout
 #define endl '\n'
@@ -20,7 +19,7 @@ typedef unsigned long long ull;
 using namespace std;
 
 /* - GLOBAL VARIABLES ---------------------------- */
- 
+
 /* ----------------------------------------------- */
 
 /* - FUNCTIONS ----------------------------------- */
@@ -34,33 +33,30 @@ int main() {
     if constexpr (local) 
         (void)!freopen("input.txt", "r", stdin);
 
-	int n, temp, cnt = 0;
-	ll res = 0;
-	multiset<ll> nums;
-
-
+	int n, temp;
+	
 	cin >> n;
+
+	vector<int> arr, dp(n, 1);
 
 	for ( int i = 0; i < n; i++ ) {
 		cin >> temp;
-		nums.insert(temp);
-	}
 
-	for ( int i = 0; i < n - 1; i++ ) {
-		for ( auto ss: nums ) {
-			cout << ss << ' ';
+		arr.push_back(temp);
+
+		for ( int j = 0; j < i; j++ ) {
+			if ( arr[j] < arr[i] ) {
+				dp[i] = max(dp[i], dp[j] + 1);
+			}
+		}
+
+		for ( auto d: dp ) {
+			cout << d << ' ';
 		}
 		cout << endl;
-		auto it = nums.begin();
-		ll first = *(it++);
-		ll second = *it;
-		ll sum = first + second;
-		res += sum;
-		nums.erase(first);
-		nums.erase(second);
-		nums.insert(sum);
 	}
 
-	cout << res << endl;
+	cout << dp[n-1] << endl;
+
     return 0;
 }

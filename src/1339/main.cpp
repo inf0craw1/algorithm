@@ -1,6 +1,7 @@
 #include <iostream>
-#include <algorithm>
-#include <set>
+#include <map>
+#include <vector>
+#include <cmath>
 
 #define debug if constexpr (local) std::cout
 #define endl '\n'
@@ -24,7 +25,10 @@ using namespace std;
 /* ----------------------------------------------- */
 
 /* - FUNCTIONS ----------------------------------- */
-
+bool cmp(pair<char, int> a, pair<char, int> b) {
+	if ( a.second == b.second ) return a.first > b.first;
+	return a.second > b.second;
+}
 /* ----------------------------------------------- */
 
 int main() {
@@ -34,33 +38,34 @@ int main() {
     if constexpr (local) 
         (void)!freopen("input.txt", "r", stdin);
 
-	int n, temp, cnt = 0;
-	ll res = 0;
-	multiset<ll> nums;
+	int num;
+	string temp;
+	vector<string> strs;
+	map<char, int> alphaScore;
 
+	cin >> num;
 
-	cin >> n;
-
-	for ( int i = 0; i < n; i++ ) {
+	for ( int i = 0; i < 26; i++ ) {
+		alphaScore.insert(make_pair('A' + i, 0));
+	}
+	
+	for ( int i = 0; i < num; i++ ) {
 		cin >> temp;
-		nums.insert(temp);
-	}
+		strs.push_back(temp);
 
-	for ( int i = 0; i < n - 1; i++ ) {
-		for ( auto ss: nums ) {
-			cout << ss << ' ';
+		int decimal = pow(10, (temp.size() - 1));
+		for ( auto ss: strs[i] ) {
+			alphaScore[ss] += decimal;
+			decimal /= 10;
 		}
-		cout << endl;
-		auto it = nums.begin();
-		ll first = *(it++);
-		ll second = *it;
-		ll sum = first + second;
-		res += sum;
-		nums.erase(first);
-		nums.erase(second);
-		nums.insert(sum);
 	}
+	sort(alphaScore.begin(), alphaScore.end(), cmp);
 
-	cout << res << endl;
+	for ( auto a: alphaScore ) {
+		cout << a.fi << ' ' << a.se << endl;
+	}
+	
+
+
     return 0;
 }

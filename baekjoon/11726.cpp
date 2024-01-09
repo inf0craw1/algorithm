@@ -1,6 +1,6 @@
 #include <iostream>
-#include <algorithm>
-#include <set>
+#include <vector>
+
 
 #define debug if constexpr (local) std::cout
 #define endl '\n'
@@ -20,11 +20,9 @@ typedef unsigned long long ull;
 using namespace std;
 
 /* - GLOBAL VARIABLES ---------------------------- */
- 
 /* ----------------------------------------------- */
 
 /* - FUNCTIONS ----------------------------------- */
-
 /* ----------------------------------------------- */
 
 int main() {
@@ -34,33 +32,29 @@ int main() {
     if constexpr (local) 
         (void)!freopen("input.txt", "r", stdin);
 
-	int n, temp, cnt = 0;
-	ll res = 0;
-	multiset<ll> nums;
+	int target;
 
+	cin >> target;
 
-	cin >> n;
+	vector<vector<ull>> dp(2, vector<ull> (target, 0));
 
-	for ( int i = 0; i < n; i++ ) {
-		cin >> temp;
-		nums.insert(temp);
+	dp[0][0] = 1;
+
+	for ( int i = 1; i < target; i++ ) {
+		dp[0][i] = dp[0][i-1] + dp[1][i-1];
+		dp[1][i] = dp[0][i-1];
+
 	}
 
-	for ( int i = 0; i < n - 1; i++ ) {
-		for ( auto ss: nums ) {
-			cout << ss << ' ';
-		}
-		cout << endl;
-		auto it = nums.begin();
-		ll first = *(it++);
-		ll second = *it;
-		ll sum = first + second;
-		res += sum;
-		nums.erase(first);
-		nums.erase(second);
-		nums.insert(sum);
+	for(int i = 0; i < target; i++) {
+		cout << dp[0][i] << ' ' << dp[1][i] << endl;
 	}
 
-	cout << res << endl;
+
+	cout << dp[0][target-1] + dp[1][target-1] << endl;
+
+
+
+
     return 0;
 }

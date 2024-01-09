@@ -1,6 +1,5 @@
 #include <iostream>
-#include <algorithm>
-#include <set>
+#include <vector>
 
 #define debug if constexpr (local) std::cout
 #define endl '\n'
@@ -20,10 +19,21 @@ typedef unsigned long long ull;
 using namespace std;
 
 /* - GLOBAL VARIABLES ---------------------------- */
+vector<ull> vec(102, 0);
+vector<ull> presets = {0, 1, 1, 1, 2, 2, 3, 4, 5, 7, 9};
  
 /* ----------------------------------------------- */
 
 /* - FUNCTIONS ----------------------------------- */
+
+ull getTriangle(int n) {
+	if ( vec[n] ) {
+		return vec[n];
+	}
+	vec[n] = getTriangle(n-1) + getTriangle(n-5);
+
+	return vec[n];
+}
 
 /* ----------------------------------------------- */
 
@@ -31,36 +41,26 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(0); cout.tie(0);
 
-    if constexpr (local) 
+	for ( int i = 0; i < presets.size(); i++ ) {
+		vec[i] = presets[i];
+	}
+
+	if constexpr (local) 
         (void)!freopen("input.txt", "r", stdin);
+  
 
-	int n, temp, cnt = 0;
-	ll res = 0;
-	multiset<ll> nums;
-
+	int n, temp;
+	ull res;
 
 	cin >> n;
 
 	for ( int i = 0; i < n; i++ ) {
 		cin >> temp;
-		nums.insert(temp);
+
+		res = getTriangle(temp);
+		cout << res << endl;
+		
 	}
 
-	for ( int i = 0; i < n - 1; i++ ) {
-		for ( auto ss: nums ) {
-			cout << ss << ' ';
-		}
-		cout << endl;
-		auto it = nums.begin();
-		ll first = *(it++);
-		ll second = *it;
-		ll sum = first + second;
-		res += sum;
-		nums.erase(first);
-		nums.erase(second);
-		nums.insert(sum);
-	}
-
-	cout << res << endl;
     return 0;
 }

@@ -1,6 +1,5 @@
 #include <iostream>
-#include <algorithm>
-#include <set>
+#include <vector>
 
 #define debug if constexpr (local) std::cout
 #define endl '\n'
@@ -20,10 +19,26 @@ typedef unsigned long long ull;
 using namespace std;
 
 /* - GLOBAL VARIABLES ---------------------------- */
+int num, target, cnt = 0;
+vector<int> nums;
  
 /* ----------------------------------------------- */
 
 /* - FUNCTIONS ----------------------------------- */
+
+void sequence(int head, int sum, vector<int> arr) {
+	if ( head >= num ) {
+		if ( sum == target && arr.size() ) {
+			cnt ++;
+		}
+		return;
+	}
+
+	vector<int> newArr = arr;
+	newArr.push_back(nums[head]);
+	sequence(head+1, sum + nums[head], newArr);
+	sequence(head+1, sum, arr);
+}
 
 /* ----------------------------------------------- */
 
@@ -34,33 +49,20 @@ int main() {
     if constexpr (local) 
         (void)!freopen("input.txt", "r", stdin);
 
-	int n, temp, cnt = 0;
-	ll res = 0;
-	multiset<ll> nums;
+	int temp;
 
+	cin >> num >> target;
 
-	cin >> n;
-
-	for ( int i = 0; i < n; i++ ) {
+	for (int i = 0; i < num; i++) {
 		cin >> temp;
-		nums.insert(temp);
+
+		nums.push_back(temp);
 	}
 
-	for ( int i = 0; i < n - 1; i++ ) {
-		for ( auto ss: nums ) {
-			cout << ss << ' ';
-		}
-		cout << endl;
-		auto it = nums.begin();
-		ll first = *(it++);
-		ll second = *it;
-		ll sum = first + second;
-		res += sum;
-		nums.erase(first);
-		nums.erase(second);
-		nums.insert(sum);
-	}
+	vector<int> empty;
+	sequence(0, 0, empty);
 
-	cout << res << endl;
+	cout << cnt << endl;
+
     return 0;
 }

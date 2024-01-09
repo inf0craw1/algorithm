@@ -1,6 +1,5 @@
 #include <iostream>
-#include <algorithm>
-#include <set>
+#include <vector>
 
 #define debug if constexpr (local) std::cout
 #define endl '\n'
@@ -20,10 +19,27 @@ typedef unsigned long long ull;
 using namespace std;
 
 /* - GLOBAL VARIABLES ---------------------------- */
+int num, maxi = 0;
+vector<int> vec;
  
 /* ----------------------------------------------- */
 
 /* - FUNCTIONS ----------------------------------- */
+
+void getStep(int idx, int continuousOne, int sum) {
+	if ( idx >= num ) {
+		if ( maxi < sum ) maxi = sum;
+		return;
+	}
+	if ( continuousOne == 2 ) {
+		getStep(idx + 2, 1, sum + vec[idx]);
+		return;
+	}
+
+	getStep(idx + 2, 1, sum + vec[idx]);
+	getStep(idx + 1, continuousOne + 1, sum + vec[idx]);
+
+}
 
 /* ----------------------------------------------- */
 
@@ -34,33 +50,21 @@ int main() {
     if constexpr (local) 
         (void)!freopen("input.txt", "r", stdin);
 
-	int n, temp, cnt = 0;
-	ll res = 0;
-	multiset<ll> nums;
+	
+	int temp;
 
+	cin >> num;
 
-	cin >> n;
+	vec.resize(num, 0);
 
-	for ( int i = 0; i < n; i++ ) {
+	for (int i = num-1; i >= 0; i--) {
 		cin >> temp;
-		nums.insert(temp);
+		vec[i] = temp;
 	}
 
-	for ( int i = 0; i < n - 1; i++ ) {
-		for ( auto ss: nums ) {
-			cout << ss << ' ';
-		}
-		cout << endl;
-		auto it = nums.begin();
-		ll first = *(it++);
-		ll second = *it;
-		ll sum = first + second;
-		res += sum;
-		nums.erase(first);
-		nums.erase(second);
-		nums.insert(sum);
-	}
+	getStep(0, 1, 0);
 
-	cout << res << endl;
+	cout << maxi << endl;
+
     return 0;
 }

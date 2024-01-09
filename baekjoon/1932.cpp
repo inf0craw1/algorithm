@@ -1,6 +1,4 @@
 #include <iostream>
-#include <algorithm>
-#include <set>
 
 #define debug if constexpr (local) std::cout
 #define endl '\n'
@@ -34,33 +32,5 @@ int main() {
     if constexpr (local) 
         (void)!freopen("input.txt", "r", stdin);
 
-	int n, temp, cnt = 0;
-	ll res = 0;
-	multiset<ll> nums;
-
-
-	cin >> n;
-
-	for ( int i = 0; i < n; i++ ) {
-		cin >> temp;
-		nums.insert(temp);
-	}
-
-	for ( int i = 0; i < n - 1; i++ ) {
-		for ( auto ss: nums ) {
-			cout << ss << ' ';
-		}
-		cout << endl;
-		auto it = nums.begin();
-		ll first = *(it++);
-		ll second = *it;
-		ll sum = first + second;
-		res += sum;
-		nums.erase(first);
-		nums.erase(second);
-		nums.insert(sum);
-	}
-
-	cout << res << endl;
     return 0;
 }
