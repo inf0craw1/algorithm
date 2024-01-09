@@ -1,0 +1,10 @@
+{
+    "id": 1920,
+    "title": "수 찾기",
+    "filetype": "cpp",
+    "language": "c++17",
+    "source_path": "main.cpp",
+    "testcase_path": "testcase.toml",
+    "checksum": "dc93134776d339cbd7cf9ec0f0f0cc8a",
+    "accepted": true
+}
