@@ -1,0 +1,10 @@
+{
+    "id": 2468,
+    "title": "안전 영역",
+    "filetype": "cpp",
+    "language": "c++17",
+    "source_path": "main.cpp",
+    "testcase_path": "testcase.toml",
+    "checksum": "6e23c24f10fc6ba360ea1cfabffd3bd9",
+    "accepted": true
+}
