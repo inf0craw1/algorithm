@@ -1,0 +1,10 @@
+{
+    "id": 2178,
+    "title": "미로 탐색",
+    "filetype": "cpp",
+    "language": "c++17",
+    "source_path": "main.cpp",
+    "testcase_path": "testcase.toml",
+    "checksum": "669eec2150fb1cd8d3856615caefcf8e",
+    "accepted": false
+}
