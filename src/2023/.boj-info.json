@@ -1,0 +1,10 @@
+{
+    "id": 2023,
+    "title": "신기한 소수",
+    "filetype": "cpp",
+    "language": "c++17",
+    "source_path": "main.cpp",
+    "testcase_path": "testcase.toml",
+    "checksum": "d6ca40e1c663b335fa55a34ed2f6bc1e",
+    "accepted": false
+}
