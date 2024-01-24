@@ -34,37 +34,58 @@ bool IsSafe(pii pos) {
 	if ( pos.fi < 0 || pos.fi >= height || pos.se < 0 || pos.se >= width ) return 0;
 	return 1;
 }
+bool CheckOverwrite(pii curPos, pii newPos) {
+	pii curDP = dpMap[curPos.fi][curPos.se];
+	pii newDP = dpMap[newPos.fi][newPos.se];
+	if ( newDP.fi == 0 && newDP.se == 0 ) return 1;
+	if ( (newDP.fi == 0 && curDP.fi != 0) || (newDP.se == 0 && curDP.se != 0) ) return 1;
+	return 0;
+}
 int FindWay(vector<vector<int>> m) {
 	queue<pii> q;
 	q.push(make_pair(0, 0));
-	m[0][0] = -1;
 	dpMap[0][0].fi = 0;
 	dpMap[0][0].se = 1;
 
 	while ( q.size() ) {
 		pii curPos = q.front();
 
+		cout << "----------------------" << endl;
 		cout << curPos.fi << ' ' << curPos.se << endl;
+		for ( auto row: dpMap ) {
+			for ( auto r: row ) {
+				cout << r.fi << ',' << r.se << ' ';
+			}
+			cout << endl;
+		}
 
 		q.pop();
 
 		for ( auto d: directions ) {
+			bool chk = 0;
 			pii newPos = make_pair(curPos.fi + d.fi, curPos.se + d.se);
 			if ( !IsSafe(newPos) ) continue;
-			if ( m[newPos.fi][newPos.se] == -1 ) continue;
-			q.push(newPos);
+			if ( !CheckOverwrite(curPos, newPos) ) continue;
 			if ( m[newPos.fi][newPos.se] == 0 ) {
-				dpMap[newPos.fi][newPos.se].fi = dpMap[curPos.fi][curPos.se].fi ? dpMap[curPos.fi][curPos.se].fi + 1 : 0;
-				dpMap[newPos.fi][newPos.se].se = dpMap[curPos.fi][curPos.se].se ? dpMap[curPos.fi][curPos.se].se + 1 : 0;
-				m[newPos.fi][newPos.se] = -1;
-				continue;
+				if ( dpMap[newPos.fi][newPos.se].fi == 0 && dpMap[curPos.fi][curPos.se].fi != 0 ) {
+					dpMap[newPos.fi][newPos.se].fi = dpMap[curPos.fi][curPos.se].fi + 1;
+					chk = 1;
+				}
+				if ( dpMap[newPos.fi][newPos.se].se == 0 && dpMap[curPos.fi][curPos.se].se != 0 ) {
+					dpMap[newPos.fi][newPos.se].se = dpMap[curPos.fi][curPos.se].se + 1;
+					chk = 1;
+				}
+				if ( !chk ) continue;
 			}
 			if ( m[newPos.fi][newPos.se] == 1 ) {
-				dpMap[newPos.fi][newPos.se].fi = dpMap[curPos.fi][curPos.se].fi ? 0 : dpMap[curPos.fi][curPos.se].se + 1;
-				dpMap[newPos.fi][newPos.se].se = 0;
-				m[newPos.fi][newPos.se] = -1;
-				continue;
+				if ( dpMap[curPos.fi][curPos.se].se != 0 && dpMap[newPos.fi][newPos.se].fi == 0 ) {
+					dpMap[newPos.fi][newPos.se].fi = dpMap[curPos.fi][curPos.se].se + 1;
+					chk = 1;
+				}
+				if ( !chk ) continue;
 			}
+			if ( dpMap[newPos.fi][newPos.se].fi == 0 && dpMap[newPos.fi][newPos.se].se == 0 ) continue;
+			q.push(newPos);
 		}
 	}
 	return -1;
