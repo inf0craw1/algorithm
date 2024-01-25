@@ -1,10 +1,10 @@
 {
-    "id": 11729,
-    "title": "하노이 탑 이동 순서",
+    "id": 2448,
+    "title": "별 찍기 - 11",
     "filetype": "cpp",
     "language": "c++17",
     "source_path": "main.cpp",
     "testcase_path": "testcase.toml",
-    "checksum": "139c0ddaee74e0f532ea752e15960a13",
+    "checksum": "f0e53defca699cedf90ea3e7a118aa26",
     "accepted": true
 }

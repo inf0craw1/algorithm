@@ -27,17 +27,12 @@ int GetRemainPole( int currentPole, int objectivePole ) {
 	return 6 - currentPole - objectivePole;
 }
 void MoveTower(int currentPole, int objectivePole, int count) {
-	
-	if ( count == 1 ) {
-		cout << currentPole << ' ' << objectivePole << endl;
-		return;
-	}
+	if ( count == 0 ) return; 
 	
 	int remainPole = GetRemainPole(currentPole, objectivePole);
 	MoveTower(currentPole, remainPole, count - 1);
 	cout << currentPole << ' ' << objectivePole << endl;
 	MoveTower(remainPole, objectivePole, count - 1);
-
 }
 /* ----------------------------------------------- */
 
