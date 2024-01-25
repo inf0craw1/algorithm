@@ -1,0 +1,10 @@
+{
+    "id": 11729,
+    "title": "하노이 탑 이동 순서",
+    "filetype": "cpp",
+    "language": "c++17",
+    "source_path": "main.cpp",
+    "testcase_path": "testcase.toml",
+    "checksum": "1c6e0523ad6106acd5e0956270271c84",
+    "accepted": true
+}
