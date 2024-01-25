@@ -43,7 +43,7 @@ int main() {
 	int n, m;
 	vector<vector<int>> mapp;
 	vector<pii> directions = { {-1, 0}, {0, -1}, {0, 1}, {1, 0} };
-	queue<pii> q;
+	queue<pair<pii, int>> q;
 	string row;
 
 	cin >> n >> m;
@@ -57,31 +57,32 @@ int main() {
 				tempRow.push_back(0);
 				continue;
 			}
-			tempRow.push_back(-1);
+			tempRow.push_back(1);
 		}
 		mapp.push_back(tempRow);
 	}
 	
 	mapp[0][0] = 1;
-	q.push(make_pair(0, 0));
+	q.push(make_pair(make_pair(0, 0), 1));
 	
 	while ( q.size() ) {
-		pii curPos = q.front();
-		q.pop();
-		int curStep = mapp[curPos.fi][curPos.se];
+		
+		pair<pii, int> cur = q.front();
+		pii curPos = cur.fi;
+		int curStep = cur.se; 
 
+		q.pop();
 
 		for ( auto d: directions ) {
 			pii newPos = make_pair( curPos.fi + d.fi, curPos.se + d.se );
 			if ( !IsSafe(newPos, n, m) ) continue;
-			if ( mapp[newPos.fi][newPos.se] == -1 ) continue;
-			if ( mapp[newPos.fi][newPos.se] != 0 && mapp[newPos.fi][newPos.se] < curStep + 1 ) continue;
+			if ( mapp[newPos.fi][newPos.se] == 1 ) continue;
 			if ( newPos.fi == n - 1 && newPos.se == m - 1 ) {
 				cout << curStep + 1 << endl;
 				return 0;
 			}
-			mapp[newPos.fi][newPos.se] = curStep + 1;
-			q.push(newPos);
+			mapp[newPos.fi][newPos.se] = 1;
+			q.push(make_pair(newPos, curStep + 1));
 		}
 	}
 
