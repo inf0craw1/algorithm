@@ -22,11 +22,11 @@ typedef unsigned long long ull;
 using namespace std;
 
 /* - GLOBAL VARIABLES ---------------------------- */
-int width, height, res;
+int height, width;
 vector<vector<int>> mapp;
-vector<vector<pii>> dpMap;
+vector<vector<pii>> stepMap;
+queue<pii> q;
 vector<pii> directions = { {-1, 0}, {0, -1}, {0, 1}, {1, 0} };
-string temp;
 /* ----------------------------------------------- */
 
 /* - FUNCTIONS ----------------------------------- */
@@ -34,61 +34,32 @@ bool IsSafe(pii pos) {
 	if ( pos.fi < 0 || pos.fi >= height || pos.se < 0 || pos.se >= width ) return 0;
 	return 1;
 }
-bool CheckOverwrite(pii curPos, pii newPos) {
-	pii curDP = dpMap[curPos.fi][curPos.se];
-	pii newDP = dpMap[newPos.fi][newPos.se];
-	if ( newDP.fi == 0 && newDP.se == 0 ) return 1;
-	if ( (newDP.fi == 0 && curDP.fi != 0) || (newDP.se == 0 && curDP.se != 0) ) return 1;
-	return 0;
-}
-int FindWay(vector<vector<int>> m) {
-	queue<pii> q;
-	q.push(make_pair(0, 0));
-	dpMap[0][0].fi = 0;
-	dpMap[0][0].se = 1;
+pii IsAbleToStep(pii curPos, pii newPos) {
+	int curType = mapp[curPos.fi][curPos.se];
+	int newType = mapp[newPos.fi][newPos.se];
+	pii curStep = stepMap[curPos.fi][curPos.se];
+	pii newStep = stepMap[newPos.fi][newPos.se];
 
-	while ( q.size() ) {
-		pii curPos = q.front();
-
-		cout << "----------------------" << endl;
-		cout << curPos.fi << ' ' << curPos.se << endl;
-		for ( auto row: dpMap ) {
-			for ( auto r: row ) {
-				cout << r.fi << ',' << r.se << ' ';
-			}
-			cout << endl;
-		}
-
-		q.pop();
-
-		for ( auto d: directions ) {
-			bool chk = 0;
-			pii newPos = make_pair(curPos.fi + d.fi, curPos.se + d.se);
-			if ( !IsSafe(newPos) ) continue;
-			if ( !CheckOverwrite(curPos, newPos) ) continue;
-			if ( m[newPos.fi][newPos.se] == 0 ) {
-				if ( dpMap[newPos.fi][newPos.se].fi == 0 && dpMap[curPos.fi][curPos.se].fi != 0 ) {
-					dpMap[newPos.fi][newPos.se].fi = dpMap[curPos.fi][curPos.se].fi + 1;
-					chk = 1;
-				}
-				if ( dpMap[newPos.fi][newPos.se].se == 0 && dpMap[curPos.fi][curPos.se].se != 0 ) {
-					dpMap[newPos.fi][newPos.se].se = dpMap[curPos.fi][curPos.se].se + 1;
-					chk = 1;
-				}
-				if ( !chk ) continue;
-			}
-			if ( m[newPos.fi][newPos.se] == 1 ) {
-				if ( dpMap[curPos.fi][curPos.se].se != 0 && dpMap[newPos.fi][newPos.se].fi == 0 ) {
-					dpMap[newPos.fi][newPos.se].fi = dpMap[curPos.fi][curPos.se].se + 1;
-					chk = 1;
-				}
-				if ( !chk ) continue;
-			}
-			if ( dpMap[newPos.fi][newPos.se].fi == 0 && dpMap[newPos.fi][newPos.se].se == 0 ) continue;
-			q.push(newPos);
-		}
+	if ( curType == 0 && newType == 0 ) {
+		pii makeStep;
+		makeStep.fi = curStep.fi != 0 ? curStep.fi + 1 : newStep.fi;
+		makeStep.se = curStep.se != 0 ? curStep.se + 1 : newStep.se;
+		if ( (newStep.fi == 0 && makeStep.fi != 0) || (newStep.se == 0 && makeStep.se != 0) ) return makeStep;
+		if ( makeStep.fi < newStep.fi || makeStep.se < newStep.se ) return makeStep;
+		return make_pair(-1, -1);
 	}
-	return -1;
+	if ( newType == 1 ) {
+		if ( curStep.se == 0 ) return make_pair(-1, -1);
+		if ( newStep.fi != 0 && newStep.fi <= curStep.se + 1 ) return make_pair(-1, -1);
+		pii makeStep = make_pair( curStep.se + 1, newStep.se );
+		return makeStep;
+	}
+	if ( newType == 0 ) {
+		if ( newStep.fi != 0 && newStep.fi <= curStep.fi + 1 ) return make_pair(-1, -1);
+		pii makeStep = make_pair( curStep.fi + 1, newStep.se );
+		return makeStep;
+	}
+	return make_pair(-1, -1);
 }
 /* ----------------------------------------------- */
 
@@ -101,34 +72,48 @@ int main() {
 
 	cin >> height >> width;
 
+	stepMap.resize(height, vector<pii> (width, make_pair(0, 0)));
+	stepMap[0][0].se = 1;
+
 	for ( int i = 0; i < height; i++ ) {
 		vector<int> tempRow;
-		vector<pii> tempDPRow;
-		cin >> temp;
-		for ( int j = 0; j < width; j++ ) {
-			tempRow.push_back(temp[j] - '0');
-			tempDPRow.push_back(make_pair(0, 0));
+		string tempString;
+		cin >> tempString;
+		for ( auto t: tempString ) {
+			tempRow.push_back(t - '0');
 		}
 		mapp.push_back(tempRow);
-		dpMap.push_back(tempDPRow);
 	}
 
-	FindWay(mapp);
-	res = max(dpMap[height - 1][width - 1].fi, dpMap[height - 1][width - 1].se);
-	cout << (res ? res : -1) << endl;
+	q.push(make_pair(0, 0));
 
-	for ( auto row: mapp ) {
-		for ( auto r: row ) {
-			cout << r << ' ';
+	while ( q.size() ) {
+		pii curPos = q.front();
+		q.pop();
+
+		if ( curPos.fi == height - 1 && curPos.se == width - 1 ) break;
+
+		for ( auto d: directions ) {
+			pii newPos = make_pair( curPos.fi + d.fi, curPos.se + d.se);
+			if ( !IsSafe(newPos) ) continue;
+			pii res = IsAbleToStep(curPos, newPos);
+			if ( res.fi == -1 ) continue;
+			stepMap[newPos.fi][newPos.se] = res;
+			q.push(newPos);
 		}
-		cout << endl;
 	}
-	for ( auto row: dpMap ) {
-		for ( auto r: row ) {
-			cout << r.fi << ',' << r.se << ' ';
-		}
-		cout << endl;
+
+	int mini = 2e9;
+	
+	pii objStep = stepMap[height - 1][width - 1];
+	if ( objStep.fi == 0 && objStep.se == 0 ) {
+		cout << -1 << endl;
+		return 0;
 	}
+	if ( objStep.fi != 0 ) mini = min(mini, objStep.fi);
+	if ( objStep.se != 0 ) mini = min(mini, objStep.se);
+
+	cout << mini << endl;
+
     return 0;
 }
-

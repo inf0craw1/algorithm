@@ -5,6 +5,6 @@
     "language": "c++17",
     "source_path": "main.cpp",
     "testcase_path": "testcase.toml",
-    "checksum": "25618624c271067c3174a3ec3e30e0e1",
-    "accepted": false
+    "checksum": "ee1b33701ed52fef4422aa808e1b3202",
+    "accepted": true
 }
