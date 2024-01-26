@@ -55,8 +55,6 @@ int main() {
 		int curTime = cur.se;
 		vector<int> nextPositions;
 
-		cout << curPos << ' ' << curTime << endl;
-
 		if ( minTime != -1 && minTime < curTime ) {
 			cout << minTime << endl << cnt << endl;
 			return 0;
@@ -82,6 +80,8 @@ int main() {
 			mapp[n] = curTime + 1;
 		}
 	}
+
+	cout << minTime << endl << cnt << endl;
 
     return 0;
 }
