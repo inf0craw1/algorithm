@@ -68,28 +68,26 @@ int main() {
 		pii cur = q.front();
 		q.pop();
 		int curPos = cur.fi;
-		int curStep = cur.se;
+		int curTime = cur.se;
 
-		if ( curPos == b ) {
-			cout << curStep << endl;
+		if ( Warp(curPos, curTime) || curPos == b ) {
+			cout << curTime << endl;
 			return 0;
 		}
 
-		if ( Warp(curPos, curStep) ) {
-			cout << curStep << endl;
-			return 0;
-		}
 		if ( IsSafe(curPos - 1) && mapp[curPos - 1] == -1 ) {
-			q.push(make_pair(curPos - 1, curStep + 1));
-			if ( Warp(curPos - 1, curStep + 1) ) {
-				cout << curStep + 1 << endl;
+			q.push(make_pair(curPos - 1, curTime + 1));
+			mapp[curPos - 1] = curTime + 1;
+			if ( Warp(curPos - 1, curTime + 1) ) {
+				cout << curTime + 1 << endl;
 				return 0;
 			}
 		}
 		if ( IsSafe(curPos + 1) && mapp[curPos + 1] == -1 ) {
-			q.push(make_pair(curPos + 1, curStep + 1));
-			if ( Warp(curPos + 1, curStep + 1) ) {
-				cout << curStep + 1 << endl;
+			q.push(make_pair(curPos + 1, curTime + 1));
+			mapp[curPos + 1] = curTime + 1;
+			if ( Warp(curPos + 1, curTime + 1) ) {
+				cout << curTime + 1 << endl;
 				return 0;
 			}
 		}
