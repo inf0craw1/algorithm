@@ -1,0 +1,10 @@
+{
+    "id": 1149,
+    "title": "RGB거리",
+    "filetype": "cpp",
+    "language": "c++17",
+    "source_path": "main.cpp",
+    "testcase_path": "testcase.toml",
+    "checksum": "50a3624d2a67c7d3fa7a30e20874a02b",
+    "accepted": true
+}
