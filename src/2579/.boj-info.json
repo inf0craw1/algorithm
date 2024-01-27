@@ -1,0 +1,10 @@
+{
+    "id": 2579,
+    "title": "계단 오르기",
+    "filetype": "cpp",
+    "language": "c++17",
+    "source_path": "main.cpp",
+    "testcase_path": "testcase.toml",
+    "checksum": "c70e2b92cd20b8f20eb64a1dc55edbb5",
+    "accepted": true
+}
