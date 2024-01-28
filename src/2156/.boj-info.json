@@ -1,0 +1,10 @@
+{
+    "id": 2156,
+    "title": "포도주 시식",
+    "filetype": "cpp",
+    "language": "c++17",
+    "source_path": "main.cpp",
+    "testcase_path": "testcase.toml",
+    "checksum": "80e137a91330166a11b4075c3fdac7a3",
+    "accepted": true
+}
