@@ -1,0 +1,10 @@
+[1]
+input = """
+ACAYKP
+CAPCAK
+"""
+
+output = """
+4
+"""
+
