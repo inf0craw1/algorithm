@@ -25,39 +25,39 @@ vector<vector<int>> mapp;
 /* ----------------------------------------------- */
 
 /* - functions ----------------------------------- */
-void rotatepeel(pii spos, pii epos) {
-	int i = spos.fi, j = spos.se;
+void RotatePeel(pii sPos, pii ePos) {
+	int i = sPos.fi, j = sPos.se;
 	vector<int> peel;
 
-	for ( ; j < epos.se; j++ ) {
+	for ( ; j < ePos.se; j++ ) {
 		peel.push_back(mapp[i][j]);
 	}
-	for ( ; i < epos.fi; i++ ) {
+	for ( ; i < ePos.fi; i++ ) {
 		peel.push_back(mapp[i][j]);
 	}
-	for ( ; j > spos.se; j-- ) {
+	for ( ; j > sPos.se; j-- ) {
 		peel.push_back(mapp[i][j]);
 	}
-	for ( ; i > spos.fi; i-- ) {
+	for ( ; i > sPos.fi; i-- ) {
 		peel.push_back(mapp[i][j]);
 	}
 	
-	i = spos.fi;
-	j = spos.se;
-	int peelsize = peel.size();
-	int startpoint = rotation % peelsize;
+	i = sPos.fi;
+	j = sPos.se;
+	int peelSize = peel.size();
+	int startPoint = rotation % peelSize;
 
-	for ( ; j < epos.se; j++, startpoint %= peelsize ) {
-		mapp[i][j] = peel[startpoint++];
+	for ( ; j < ePos.se; j++, startPoint %= peelSize ) {
+		mapp[i][j] = peel[startPoint++];
 	}
-	for ( ; i < epos.fi; i++, startpoint %= peelsize ) {
-		mapp[i][j] = peel[startpoint++];
+	for ( ; i < ePos.fi; i++, startPoint %= peelSize ) {
+		mapp[i][j] = peel[startPoint++];
 	}
-	for ( ; j > spos.se; j--, startpoint %= peelsize ) {
-		mapp[i][j] = peel[startpoint++];
+	for ( ; j > sPos.se; j--, startPoint %= peelSize ) {
+		mapp[i][j] = peel[startPoint++];
 	}
-	for ( ; i > spos.fi; i--, startpoint %= peelsize ) {
-		mapp[i][j] = peel[startpoint++];
+	for ( ; i > sPos.fi; i--, startPoint %= peelSize ) {
+		mapp[i][j] = peel[startPoint++];
 	}
 }
 /* ----------------------------------------------- */
@@ -72,22 +72,22 @@ int main() {
 	cin >> height >> width >> rotation;
 
 	for ( int i = 0; i < height; i++ ) {
-		vector<int> temprow;
+		vector<int> tempRow;
 		for ( int j = 0; j < width; j++ ) {
 			cin >> temp;
-			temprow.push_back(temp);
+			tempRow.push_back(temp);
 		}
-		mapp.push_back(temprow);
+		mapp.push_back(tempRow);
 	}
 
-	pii spos = make_pair(0, 0);
-	pii epos = make_pair(height - 1, width - 1);
-	while ( spos.fi < epos.fi && spos.se < epos.se ) {
-		rotatepeel(spos, epos);
-		spos.fi ++;
-		spos.se ++;
-		epos.fi --;
-		epos.se --;
+	pii sPos = make_pair(0, 0);
+	pii ePos = make_pair(height - 1, width - 1);
+	while ( sPos.fi < ePos.fi && sPos.se < ePos.se ) {
+		RotatePeel(sPos, ePos);
+		sPos.fi ++;
+		sPos.se ++;
+		ePos.fi --;
+		ePos.se --;
 	}
 	for ( auto row: mapp ) {
 		for ( auto r: row ) {
