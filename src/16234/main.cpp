@@ -111,7 +111,6 @@ int main() {
 	while ( ChkOpenBorders() ) {
 		movePopulation(openBorderNum);
 		day ++;
-
 	}
 	cout << day << endl;
 
