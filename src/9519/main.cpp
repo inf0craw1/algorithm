@@ -72,11 +72,12 @@ int main() {
 
 	mixCount = ((len % 2 == 0) ? (len/2 - 1) : (len/2));
 
-	for ( int i = 0; i < blinking; i++ ) {
+	for ( int i = 0; i < 1000; i++ ) {
 		DoBlink();
 		blinkingStrs.push_back(string(str.begin(), str.end()));
 
 		if ( IsSameVector(existingStr, str) ) {
+			cout << "cycle :" << i + 1 << endl;
 			cycle = ++i;
 			break;
 		}
