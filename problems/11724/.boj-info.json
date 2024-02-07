@@ -1,0 +1,10 @@
+{
+    "id": 11724,
+    "title": "연결 요소의 개수",
+    "filetype": "cpp",
+    "language": "c++17",
+    "source_path": "main.cpp",
+    "testcase_path": "testcase.toml",
+    "checksum": "cd59023e9dc3665cebb1640fc8bcca93",
+    "accepted": true
+}

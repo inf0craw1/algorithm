@@ -1,0 +1,10 @@
+{
+    "id": 1990,
+    "title": "소수인팰린드롬",
+    "filetype": "cpp",
+    "language": "c++17",
+    "source_path": "main.cpp",
+    "testcase_path": "testcase.toml",
+    "checksum": "fe0131b1323236997a366459a9a268ad",
+    "accepted": false
+}
