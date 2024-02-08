@@ -1,0 +1,10 @@
+{
+    "id": 1012,
+    "title": "유기농 배추",
+    "filetype": "cpp",
+    "language": "c++17",
+    "source_path": "main.cpp",
+    "testcase_path": "testcase.toml",
+    "checksum": "656a8d2ee6ac2f6248acea151b2dc6bc",
+    "accepted": true
+}

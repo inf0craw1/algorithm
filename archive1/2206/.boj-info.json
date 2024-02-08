@@ -1,0 +1,10 @@
+{
+    "id": 2206,
+    "title": "벽 부수고 이동하기",
+    "filetype": "cpp",
+    "language": "c++17",
+    "source_path": "main.cpp",
+    "testcase_path": "testcase.toml",
+    "checksum": "ee1b33701ed52fef4422aa808e1b3202",
+    "accepted": true
+}

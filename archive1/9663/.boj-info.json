@@ -1,0 +1,10 @@
+{
+    "id": 9663,
+    "title": "N-Queen",
+    "filetype": "cpp",
+    "language": "c++17",
+    "source_path": "main.cpp",
+    "testcase_path": "testcase.toml",
+    "checksum": "4035f6531b09e0492351d51d42c0c758",
+    "accepted": false
+}
