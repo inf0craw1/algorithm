@@ -24,17 +24,17 @@ typedef unsigned long long ull;
 /* - GLOBAL VARIABLES ---------------------------- */
 string str, exStr;
 int len, exLen;
-vector<pi> skipParts;
 /* ----------------------------------------------- */
 
 /* - FUNCTIONS ----------------------------------- */
 pi FindChainingExplosion(int s, int from, int jump) {
-	cout << s << ' ' << from << ' ' << jump << endl;
+
 	for ( int i = s; i < from ; i++ ) {
 		bool chkFound = true;
-		for ( int j = i, k = 0; k < exLen; j++, k++ ) {
+		for ( int j = i, k = 0; j < len && k < exLen; j++, k++ ) {
 			if ( j == from ) {
 				j += jump;
+				k--;
 				continue;
 			}
 			if ( str[j] != exStr[k] ) {
@@ -63,43 +63,38 @@ int main() {
 	exLen = exStr.size();
 
 	while ( 1 ) {
-		cout << "==================" << endl;
-		bool chkFound = false;
 		int start = 0;
+		vector<pi> skipParts;
+
 		while ( start < len ) {
 			auto f = str.find(exStr, start);
 			if ( f == string::npos ) {
 				break;
 			}
-			chkFound = true;
-			cout << "----------" << endl;
-			cout << f << endl;
 			pi res = FindChainingExplosion( max(0, (int)f - exLen + 1), f, exLen - 1);
 			start = res.fi + res.se;
 			skipParts.push_back(res);
 		}
 
 		string resStr = "";
-		cout << "---------------------" << endl;
-		for ( auto s: skipParts ) {
-			cout << s.fi << ' ' << s.se << endl;
-		}
+	
 		for ( int i = 0; i < len; i++ ) {
+			bool isSkipped = false;
 			for ( auto s: skipParts ) {
 				if ( i == s.fi ) {
-					i += s.se + 1;
+					isSkipped = true;
+					i += s.se;
 					break;
 				}
 			}
-
-			if ( i >= len ) break;
+			if ( isSkipped ) continue;
 			
 			resStr += str[i];
 		}
-		cout << resStr << endl;
 		str = resStr;
+		len = str.size();
 
-		if ( !chkFound ) break;
+		if ( skipParts.empty() ) break;
 	}
 
 	if ( str == "" ) {
