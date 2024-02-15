@@ -35,30 +35,30 @@ int main() {
     if constexpr (local) 
         (void)!freopen("input.txt", "r", stdin);
 
-	ll n, res = 0, temp; cin >> n;
-	unordered_multiset<ll> nums;
+	int n; cin >> n;
+	vi nums(n);
+	for ( auto &x: nums ) cin >> x;
+	sort(all(nums));
+
+	int res = 0;
 
 	for ( int i = 0; i < n; i++ ) {
-		cin >> temp;
-		nums.insert(temp);
-	}
+		int s = 0, e = n - 1;
+		if ( i == 0 ) s++;
+		if ( i == n-1 ) e--;
 
-	for ( auto num: nums ) {
-		unordered_multiset<ll> remainNums = nums;
-		auto it = remainNums.find(num);
-
-		remainNums.erase(it);
-
-		for ( auto r: remainNums ) {
-			unordered_multiset<ll> remainRemainNums = remainNums;
-			auto removeTarget = remainRemainNums.find(r);
-			remainRemainNums.erase(removeTarget);
-			
-			auto it = remainRemainNums.find(num-r);
-			if ( it != remainRemainNums.end() ) {
+		while ( s < e ) {
+			if ( nums[s] + nums[e] == nums[i] ) {
 				res ++;
 				break;
 			}
+			if ( nums[s] + nums[e] < nums[i] ) {
+				s++;
+				if ( s == i ) s++;
+				continue;
+			}
+			e--;
+			if ( e == i ) e--;
 		}
 	}
 
