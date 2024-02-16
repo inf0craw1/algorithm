@@ -35,5 +35,27 @@ int main() {
     if constexpr (local) 
         (void)!freopen("input.txt", "r", stdin);
 
+	int n; cin >> n;
+	vi nums(n); for ( auto &x: nums ) cin >> x;
+	vi stck, res; res.resize(n, -1);
+
+	for ( int i = 0; i < n; i++ ) {
+		if ( stck.empty() || nums[stck.back()] >= nums[i] ) {
+			stck.push_back(i);
+			continue;
+		}
+
+		while ( !stck.empty() && nums[stck.back()] < nums[i] ) {
+			res[stck.back()] = nums[i];
+			stck.pop_back();
+		}
+		stck.push_back(i);
+	}
+
+	for ( auto r: res ) {
+		cout << r << ' ';
+	}
+	cout << endl;
+
     return 0;
 }
