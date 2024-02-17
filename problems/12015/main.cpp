@@ -2,15 +2,18 @@
 
 #define endl '\n'
 using namespace std;
-int GetReplacePosition(vector<int> nums, int target) {
-	int s = 0, e = nums.size() - 1;
+
+vector<int> increasingNums;
+
+int GetReplacePosition(int target) {
+	int s = 0, e = increasingNums.size() - 1;
 	int mini = e;
 
-	while ( s < e ) {
+	while ( s <= e ) {
 		int mid = (s + e) / 2;
-		if ( nums[mid] >= target ) {
+		if ( increasingNums[mid] >= target ) {
 			mini = min(mini, mid);
-			e = mid;
+			e = mid - 1;
 			continue;
 		}
 		s = mid + 1;
@@ -32,7 +35,7 @@ int main() {
 		cin >> temp;
 		nums.push_back(temp);
 	}
-	vector<int> increasingNums = {nums[0]};
+	increasingNums.push_back(nums[0]);
 
 	for ( int i = 1; i < n; i++ ) {
 
@@ -40,7 +43,7 @@ int main() {
 			increasingNums.push_back(nums[i]);
 			continue;
 		}
-		int pos = GetReplacePosition(increasingNums, nums[i]);
+		int pos = GetReplacePosition(nums[i]);
 		increasingNums[pos] = nums[i];
 	}
 	cout << increasingNums.size() << endl;
