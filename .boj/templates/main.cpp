@@ -2,10 +2,10 @@
 
 #define debug if constexpr (local) std::cout
 #define endl '\n'
-#define inf 0x3f3f3f3f
-#define linf 0x3f3f3f3f3f3f3f3f
 #define fi first
 #define se second
+#define INF 0x7fffffff
+#define LINF 0x7fffffffffffffff
 #define all(x) x.begin(), x.end()
 #define rall(x) x.rbegin(), x.rend()
 using namespace std;
@@ -16,16 +16,15 @@ constexpr bool local = true;
 constexpr bool local = false;
 #endif
 
-typedef long long ll;
 typedef vector<ll> vi;
 typedef pair<ll, ll> pi;
+typedef long long ll;
 typedef unsigned long long ull;
 
 /* - GLOBAL VARIABLES ---------------------------- */
 /* ----------------------------------------------- */
 
 /* - FUNCTIONS ----------------------------------- */
-
 /* ----------------------------------------------- */
 
 int main() {
