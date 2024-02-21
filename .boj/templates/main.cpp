@@ -16,10 +16,10 @@ constexpr bool local = true;
 constexpr bool local = false;
 #endif
 
-typedef vector<ll> vi;
-typedef pair<ll, ll> pi;
 typedef long long ll;
 typedef unsigned long long ull;
+typedef vector<ll> vi;
+typedef pair<ll, ll> pi;
 
 /* - GLOBAL VARIABLES ---------------------------- */
 /* ----------------------------------------------- */
