@@ -21,50 +21,37 @@ typedef unsigned long long ull;
 typedef vector<ll> vi;
 typedef pair<ll, ll> pi;
 /* - GLOBAL VARIABLES ---------------------------- */
-int mapSize, maxi = 0;
-vector<vi> bannedMap, mapp;
+int mapSize, maxi1 = 0, maxi2 = 0;
+vector<vi> bannedMap;
+map<int, unordered_set<int>> diagonal1;
+unordered_set<int> diagonal2;
 /* ----------------------------------------------- */
 /* - FUNCTIONS ----------------------------------- */
 bool IsSafe(pi pos) {
 	if ( pos.fi < 0 || pos.fi >= mapSize || pos.se < 0 || pos.se >= mapSize ) return 0;
 	return 1;
 }
-pi GetNextPossiblePos(pi lastPos) {
-	int row = lastPos.fi;
-	int col = lastPos.se + 1;
-
-	for ( int j = col; j < mapSize; j++ ) {
-		if ( bannedMap[row][j] && mapp[row][j] == 0 ) return make_pair(row, j);
-	}
-
-	for ( int i = row+1; i < mapSize; i++ ) {
-		for  (int j = 0; j < mapSize; j++) {
-			if ( bannedMap[i][j] && mapp[i][j] == 0 ) return make_pair(i, j);
+void PlaceBishop(int curDiagonal, int count) {
+	if ( curDiagonal > 2*(mapSize-1) ) {
+		if ( curDiagonal % 2 == 0 ) {
+			maxi1 = max(maxi1, count);
+			return;
 		}
-	}
-	
-	return make_pair(-1, -1);
-}
-void PlaceBishop(pi lastPos, int count) {
-	pi nextPossiblePos = GetNextPossiblePos(lastPos);
-	
-	if ( nextPossiblePos.fi == -1 ) {
-		maxi = max(maxi, count);
-		cout << count << ' ';
+		maxi2 = max(maxi2, count);
 		return;
 	}
 
-	for ( int i = 1; i <= mapSize; i++ ) {
-		if ( IsSafe(make_pair(nextPossiblePos.fi + i, nextPossiblePos.se - i)) ) mapp[nextPossiblePos.fi + i][nextPossiblePos.se - i] ++;
-		if ( IsSafe(make_pair(nextPossiblePos.fi + i, nextPossiblePos.se + i)) ) mapp[nextPossiblePos.fi + i][nextPossiblePos.se + i] ++;
-	}
-	PlaceBishop(nextPossiblePos, count + 1);
-	for ( int i = 1; i <= mapSize; i++ ) {
-		if ( IsSafe(make_pair(nextPossiblePos.fi + i, nextPossiblePos.se - i)) ) mapp[nextPossiblePos.fi + i][nextPossiblePos.se - i] --;
-		if ( IsSafe(make_pair(nextPossiblePos.fi + i, nextPossiblePos.se + i)) ) mapp[nextPossiblePos.fi + i][nextPossiblePos.se + i] --;
-	}
-	PlaceBishop(nextPossiblePos, count);
+	auto foundDiagonal = diagonal1.find(curDiagonal);
 
+	for ( auto d2: foundDiagonal->se ) {
+		if ( diagonal2.find(d2) != diagonal2.end() ) {
+			diagonal2.erase(d2);
+			PlaceBishop(curDiagonal+2, count + 1);
+			diagonal2.insert(d2);
+		}
+	}
+
+	PlaceBishop(curDiagonal+2, count);
 }
 /* ----------------------------------------------- */
 
@@ -76,20 +63,28 @@ int main() {
         (void)!freopen("input.txt", "r", stdin);
 
 	cin >> mapSize;
-	mapp.resize(mapSize, vi (mapSize, 0));
 
 	for ( int i = 0; i < mapSize; i++ ) {
 		vi tempRow;
 		for  (int j = 0; j < mapSize; j++) {
 			int temp; cin >> temp;
 			tempRow.push_back(temp);
+			if (temp == 1) {
+				auto foundD = diagonal1.find(i+j);
+				if ( foundD == diagonal1.end() ) {
+					diagonal1.insert({i+j, {i-j}});
+				} else {
+					foundD->se.insert(i-j);
+				}
+				diagonal2.insert(i-j);
+			}
 		}
 		bannedMap.push_back(tempRow);
 	}
+	PlaceBishop(0, 0);
+	PlaceBishop(1, 0);
 
-	PlaceBishop(make_pair(0, -1), 0);
-
-	cout << maxi << endl;
+	cout << maxi1 + maxi2 << endl;
 
     return 0;
 }
