@@ -67,7 +67,7 @@ int main() {
 		for ( int i = 1; i <= vertices; i++ ) {
 			if ( graph[i][i] < 0 ) canGoPast = true;
 		}
-		
+	
 		if ( canGoPast ) {
 			cout << "YES" << endl;
 			continue;
