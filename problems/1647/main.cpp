@@ -46,6 +46,7 @@ int main() {
 	parent = {0};
 	priority_queue<pair<int, pi>> q;
 	int res = 0;
+	int maxCost = 0;
 
 	for ( int i = 0; i < vertices; i++  ) {
 		parent.push_back(i+1);
@@ -70,12 +71,13 @@ int main() {
 		if ( root1 == root2 ) continue;
 
 		res += curCost;
+		maxCost = max(maxCost, curCost);
 		parent[root1] = min(root1, root2);
 		parent[root2] = min(root1, root2);
 
 	}
 
-	cout << res << endl;
+	cout << res - maxCost << endl;
 
 
     return 0;
