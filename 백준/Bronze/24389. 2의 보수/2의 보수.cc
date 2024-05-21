@@ -36,12 +36,7 @@ int main() {
 
 	int n; cin >> n;
 
-	bitset<32> binN = n;
-	bitset<32> complementN = (n ^ ~0) + 1;
-
-	bitset<32> nXOR = ( binN ^ complementN );
-
-	cout << nXOR.count() << endl;
+	cout << bitset<32>(n ^ (~n + 1)).count() << endl;
 
     return 0;
 }
