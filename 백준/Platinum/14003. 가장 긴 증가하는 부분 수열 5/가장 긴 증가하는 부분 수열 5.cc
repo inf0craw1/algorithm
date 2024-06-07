@@ -1,4 +1,4 @@
-#include <bits/stdc++.h>
+#include <bits/stdc++.h> // 모든 헤더파일
 
 #define debug if constexpr (local) std::cout
 #define endl '\n'
@@ -19,13 +19,13 @@ constexpr bool local = false;
 typedef long long ll;
 typedef unsigned long long ull;
 typedef vector<ll> vi;
-typedef pair<ll, ll> pi;
+typedef pair<ll, ll> pi; // 템플릿 종료
 
 /* - GLOBAL VARIABLES ---------------------------- */
 /* ----------------------------------------------- */
 
 /* - FUNCTIONS ----------------------------------- */
-int GetReplascePos(vi& increasingNums, int num) {
+int GetReplascePos(vi& increasingNums, int num) { // 각 증가하는 수열의 포지션을 변경
 	int s = 0, e = increasingNums.size() - 1;
 	int minPos = e;
 
@@ -42,7 +42,7 @@ int GetReplascePos(vi& increasingNums, int num) {
 
 	return minPos;
 }
-void ReplaceMaxIncreasingNums(vi& increasingNums, vi& maxIncreasingNums, int curPos) {
+void ReplaceMaxIncreasingNums(vi& increasingNums, vi& maxIncreasingNums, int curPos) { // 최대 증가 부분수열을 구함
 	if ( curPos == 0 ) return;
 	if ( maxIncreasingNums[curPos-1] >= maxIncreasingNums[curPos] ) {
 		maxIncreasingNums[curPos-1] = increasingNums[curPos-1];
@@ -63,7 +63,7 @@ int main() {
 	vi increasingNums, maxIncreasingNums;
 	vector<vi> savedIncreasingNums;
 
-	for ( int i = 0; i < n; i++ ) {
+	for ( int i = 0; i < n; i++ ) { // 현재 숫자가 증가한다면 증가수열에 추가
 		if ( increasingNums.empty() || increasingNums.back() < nums[i] ) {
 			increasingNums.push_back(nums[i]);
 			savedIncreasingNums.push_back({i});
@@ -78,7 +78,7 @@ int main() {
 	vi res;
 	int maxIdx = INF;
 
-	for ( int i = savedIncreasingNums.size() - 1; i >= 0; i-- ) {
+	for ( int i = savedIncreasingNums.size() - 1; i >= 0; i-- ) { // 현재 쌓아놓은 증가하는 부분수열을 찾기
 		for ( int j = savedIncreasingNums[i].size() - 1; j >= 0; j-- ) {
 			if ( savedIncreasingNums[i][j] > maxIdx ) continue;
 			maxIdx = savedIncreasingNums[i][j];
@@ -87,9 +87,9 @@ int main() {
 		res.push_back(maxIdx);
 	}
 
-	cout << res.size() << endl;
+	cout << res.size() << endl; // 가장 긴 부분수열의 길이 출력
 
-	for ( int i = res.size() - 1; i >= 0; i-- ) {
+	for ( int i = res.size() - 1; i >= 0; i-- ) { // 가장 긴 부분수열 출력
 		cout << nums[res[i]] << ' ';
 	}
 	cout << endl;
