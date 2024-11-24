@@ -54,18 +54,16 @@ int main() {
         mmap.push_back(tempRow);
     }
 
+    if ( mmap[0][0] == 0 ) {
+        cout << "HaruHaru" << endl;
+        return 0;
+    }
+
     q.push(make_pair(0, 0));
 
     while ( q.size() ) {
         pi curPos = q.front();
         q.pop();
-        if ( chk[curPos.fi][curPos.se] ) continue;
-        chk[curPos.fi][curPos.se] = 1;
-
-        if ( curPos.fi == n-1 && curPos.se == n-1 ) {
-            cout << "HaruHaru" << endl;
-            return 0;
-        }
 
         int curNum = mmap[curPos.fi][curPos.se];
 
@@ -73,6 +71,11 @@ int main() {
             pi newPos = make_pair(curPos.fi + d.fi * curNum, curPos.se + d.se * curNum);
 
             if ( !isSafe(newPos) ) continue;
+            if ( mmap[newPos.fi][newPos.se] == 0 ) continue;
+            if ( mmap[newPos.fi][newPos.se] == -1 ) {
+                cout << "HaruHaru" << endl;
+                return 0;
+            }
             q.push(newPos);
         }
     }
