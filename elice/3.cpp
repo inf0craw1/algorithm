@@ -19,12 +19,34 @@ constexpr bool local = false;
 typedef long long ll;
 typedef unsigned long long ull;
 typedef vector<ll> vi;
+typedef vector<vector<ll>> vvi;
 typedef pair<ll, ll> pi;
 
 /* - GLOBAL VARIABLES ---------------------------- */
+int n;
 /* ----------------------------------------------- */
 
 /* - FUNCTIONS ----------------------------------- */
+void getCombination(int len, string curStr) {
+    if ( len == n )  {
+
+        vi counts = vi(n, 0);
+
+        for ( auto c: curStr ) {
+            int num = c - '0';
+            counts[num]++;
+        }
+        if ( counts[1] <= counts[2] && counts[2] <= counts[3] ) {
+            cout << curStr << endl;
+        }
+        return;
+    }
+
+    for ( int i = 1; i <= 3; i++ ) {
+        getCombination(len+1, curStr + to_string(i));
+    }
+ 
+}
 /* ----------------------------------------------- */
 
 int main() {
@@ -34,29 +56,9 @@ int main() {
     if constexpr (local) 
         (void)!freopen("input.txt", "r", stdin);
 
-	string str; cin >> str;
-	string res;
+    cin >> n;
 
-	for ( auto s: str ) {
-		if ( s == ')' ) {
-			string tempStr = ""; 
-			while ( res.back() != '(' ) {
-				tempStr.push_back(res.back());
-				res.pop_back();
-			}
-			res.pop_back();
+    getCombination(0, "");
 
-			int count = res.back() - '0';
-			res.pop_back();
-
-			for ( int i = 0; i < count; i++ ) {
-				res.append(tempStr);
-			}
-			continue;
-		}
-		res.push_back(s);
-	}
-
-	cout << res.size() << endl;
     return 0;
 }

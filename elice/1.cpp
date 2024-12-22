@@ -4,7 +4,11 @@
 #define endl '\n'
 #define fi first
 #define se second
-#define all(x) x.begin(),x.end()
+#define INF 0x7fffffff
+#define LINF 0x7fffffffffffffff
+#define all(x) x.begin(), x.end()
+#define rall(x) x.rbegin(), x.rend()
+using namespace std;
 
 #ifdef LOCAL
 constexpr bool local = true;
@@ -14,24 +18,14 @@ constexpr bool local = false;
 
 typedef long long ll;
 typedef unsigned long long ull;
-
-using namespace std;
+typedef vector<ll> vi;
+typedef vector<vector<ll>> vvi;
+typedef pair<ll, ll> pi;
 
 /* - GLOBAL VARIABLES ---------------------------- */
- 
 /* ----------------------------------------------- */
 
 /* - FUNCTIONS ----------------------------------- */
-ll GetScore(int num) {
-	ll res = 0;
-
-	while ( num ) {
-		res += pow(10, num % 10 );
-		num /= 10;
-	}
-
-	return res;
-}
 /* ----------------------------------------------- */
 
 int main() {
@@ -41,17 +35,16 @@ int main() {
     if constexpr (local) 
         (void)!freopen("input.txt", "r", stdin);
 
-	int num; cin >> num;
-	ll targetScore = GetScore(num);
+    int a, b, c; cin >> a >> b >> c;
+    int res = 0;
 
-	cout << targetScore << endl;
-	
-	for ( int i = num + 1; ; i++ ) {
-		if ( GetScore(i) == targetScore ) {
-			cout << i << endl;
-			return 0;
-		}
-	}
+    for ( int i = a; i <= b; i++ ) {
+        if ( i % c == 0 ) {
+            res += i;
+        }
+    }
+    
+    cout << res << endl; 
 
     return 0;
 }

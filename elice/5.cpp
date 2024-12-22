@@ -19,12 +19,57 @@ constexpr bool local = false;
 typedef long long ll;
 typedef unsigned long long ull;
 typedef vector<ll> vi;
+typedef vector<vector<ll>> vvi;
 typedef pair<ll, ll> pi;
 
 /* - GLOBAL VARIABLES ---------------------------- */
+ll n;
+vvi mapp, maxMap;
 /* ----------------------------------------------- */
 
 /* - FUNCTIONS ----------------------------------- */
+bool isSafe(pi pos) {
+    if ( pos.fi < 0 || pos.se < 0 || pos.fi >= n || pos.se >= n ) return false;
+    return true;
+}
+ll findMax(pi pos) {
+    if ( maxMap[pos.fi][pos.se] != -99999 ) return maxMap[pos.fi][pos.se];
+    ll maxi = -2e9;
+
+    ll curNum = mapp[pos.fi][pos.se];
+
+    if ( isSafe({pos.fi - 1, pos.se + 1}) ) {
+        ll n1 = findMax({pos.fi-1, pos.se});
+        ll n2 = findMax({pos.fi-1, pos.se+1});
+        ll n3 = findMax({pos.fi, pos.se+1});
+
+        maxi = max(n1, n3);
+        maxi = max(maxi, n2);
+
+        int curRes = maxi + curNum;
+
+        maxMap[pos.fi][pos.se] = curRes;
+
+        //cout << "curPos: " << pos.fi << ", " << pos.se << ", "<< "curRes: " << curRes << endl;
+        
+        return curRes;
+    }
+    if ( isSafe({pos.fi - 1, pos.se}) ) {
+        ll n1 = findMax({pos.fi-1, pos.se});
+        ll curRes = n1 + curNum;
+        maxMap[pos.fi][pos.se] = curRes;
+
+        //cout << "curPos: " << pos.fi << ", " << pos.se << ", "<< "curRes: " << curRes << endl;
+        return curRes;
+    }
+    ll n1 = findMax({pos.fi, pos.se+1});
+    ll curRes =  n1 + curNum;
+
+    maxMap[pos.fi][pos.se] = curRes;
+
+        //cout << "curPos: " << pos.fi << ", " << pos.se << ", "<< "curRes: " << curRes << endl;
+    return curRes;
+}
 /* ----------------------------------------------- */
 
 int main() {
@@ -34,59 +79,21 @@ int main() {
     if constexpr (local) 
         (void)!freopen("input.txt", "r", stdin);
 
-	int n; cin >> n;
-	vi nums(pow(2, n)); for ( auto &nn: nums ) cin >> nn;
-	vi res;
-	map<int, int> current, target;
+    cin >> n;
+    
+    for ( int i = 0; i < n; i++ ) {
+        vi tempRow;
+        for ( int j = 0; j < n; j++ ) {
+            int temp; cin >> temp;
+            tempRow.push_back(temp);
+        }
+        mapp.push_back(tempRow);
+    }
+    maxMap = vvi(n, vi(n, -99999));
+    maxMap[0][n-1] = mapp[0][n-1];
 
-	sort(all(nums));
+    ll res = findMax({n-1, 0});
 
-	current.insert({0, 1});
-	
-	for ( auto curNum: nums ) {
-		auto foundCurrent = current.find(curNum);
-		auto foundTarget = target.find(curNum);
-		if ( foundTarget == target.end() ) {
-			target.insert({curNum, 1});
-		} else {
-			foundTarget->se++;
-		}
-
-		foundTarget = target.find(curNum);
-
-		if ( foundCurrent == current.end() || foundCurrent->se < foundTarget->se ) {
-			res.push_back(curNum);
-			map<int, int> additionalMap;
-			for ( auto c: current ) {
-				int newNum = c.fi + curNum;
-				auto foundNewNum = current.find(newNum);
-
-				if ( foundNewNum == current.end() ) {
-					auto foundAdditionalMap = additionalMap.find(newNum);
-					if ( foundAdditionalMap == additionalMap.end() ) {
-						additionalMap.insert({newNum, c.se});
-						continue;
-					}
-
-					foundAdditionalMap = additionalMap.find(newNum);
-					foundAdditionalMap->se ++;
-					continue;
-				}
-
-				for ( int i = 0; i < c.se; i++ ) {
-					foundNewNum->se ++;
-				}
-			}
-			current.insert(all(additionalMap));
-		}
-	}
-
-	for ( auto r: res  ) {
-		cout << r << ' ';
-	}
-	cout << endl;
-
-	
-
+    cout << res << endl;
     return 0;
 }

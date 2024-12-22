@@ -19,6 +19,7 @@ constexpr bool local = false;
 typedef long long ll;
 typedef unsigned long long ull;
 typedef vector<ll> vi;
+typedef vector<vector<ll>> vvi;
 typedef pair<ll, ll> pi;
 
 /* - GLOBAL VARIABLES ---------------------------- */
@@ -34,21 +35,32 @@ int main() {
     if constexpr (local) 
         (void)!freopen("input.txt", "r", stdin);
 
-	int sizes, cases; cin >> sizes >> cases;
-	vi nums(sizes, 0);
+    int n; cin >> n;
+    vvi mapp;
+    for ( int i = 0; i < n; i++ ) {
+        vi tempRow;
+        for ( int j = 0; j < n; j++ ) {
+            int temp; cin >> temp;
+            tempRow.push_back(temp);
+        }
+        mapp.push_back(tempRow);
+    }
 
-	for ( auto &n: nums ) cin >> n;
+    int targetRow, targetCol; cin >> targetRow >> targetCol;
+    int targetNum = mapp[targetRow-1][targetCol-1];
 
-	for ( int i = 0; i < cases; i++ ) {
-		int starts, ends, order; cin >> starts >> ends >> order;
-		priority_queue<int> pq;
+    for ( int i = targetRow-1; i < n; i++ ) {
+        for ( int j = targetCol-1; j < n; j++ ) {
+            if ( mapp[i][j] < targetNum ) mapp[i][j] = 0;
+        }
+    }
 
-		for ( int j = starts-1; j < ends; j++ ) {
-			pq.push(-nums[j]);
-		}
-		for ( int j = 0; j < order-1; j++ ) pq.pop();
-		cout << -pq.top() << endl;
-	}
+    for ( auto row: mapp ) {
+        for ( auto col: row ) {
+            cout << col << ' ';
+        }
+        cout << endl;
+    }
 
     return 0;
 }
