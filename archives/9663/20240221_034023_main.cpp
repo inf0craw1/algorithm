@@ -37,6 +37,13 @@ void PlaceQueen(int row) {
 		res ++;
 		return;
 	}
+    cout << "----------------------" << endl;
+    for ( auto row: mapp ) {
+        for ( auto col: row ) {
+            cout <<  col << ' ';
+        }
+        cout << endl;
+    }
 	for ( int i = 0; i < n; i++ ) {
 		if ( mapp[curRow][i] != 0) continue;
 		for ( int j = curRow+1, k = 1; j < n; j++, k++ ) {
