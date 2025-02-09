@@ -18,9 +18,12 @@ constexpr bool local = false;
 
 typedef long long ll;
 typedef unsigned long long ull;
-typedef vector<ll> vi;
-typedef vector<vector<ll>> vvi;
-typedef pair<ll, ll> pi;
+typedef vector<int> vi;
+typedef vector<vector<int>> vvi;
+typedef vector<ll> vl;
+typedef vector<vector<ll>> vvl;
+typedef pari<int, int> pi;
+typedef pair<ll, ll> pl;
 
 /* - GLOBAL VARIABLES ---------------------------- */
 /* ----------------------------------------------- */
