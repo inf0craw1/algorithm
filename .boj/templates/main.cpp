@@ -22,7 +22,7 @@ typedef vector<int> vi;
 typedef vector<vector<int>> vvi;
 typedef vector<ll> vl;
 typedef vector<vector<ll>> vvl;
-typedef pari<int, int> pi;
+typedef pair<int, int> pi;
 typedef pair<ll, ll> pl;
 
 /* - GLOBAL VARIABLES ---------------------------- */
